@@ -3,10 +3,18 @@
 
 """Importing BaseModel class"""
 import json
-from models.BaseModel import BaseModel
+from models.BaseModel import BaseModel, dataBase
+from sqlalchemy import Column, String
 
 class Country(BaseModel):
     """Country Class"""
+
+    __tablename__ = 'Countries'
+
+    
+    code = Column("code", String)
+    Country = Column("country", String)
+    
     def __init__(self, code, name):
         super().__init__()
         self.code = code

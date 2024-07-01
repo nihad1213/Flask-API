@@ -11,25 +11,25 @@ class DataManager(IPersistanceManager):
     
     # Save Entity entity can be City, Country ...
     def save(self, entity):
-        database.session.add(entity)
-        database.session.commit()
+        dataBase.session.add(entity)
+        dataBase.session.commit()
     
     # Get Entities
     def get(self, entityID, entityType):
         model_class = self._get_model_class(entityType)
-        return database.session.query(model_class).get(entityID)
+        return dataBase.session.query(model_class).get(entityID)
     
     # Upadte Entities
     def update(self, entity):
-        database.session.commit()
+        dataBase.session.commit()
     
     # Delete Entities
     def delete(self, entityID, entityType):
         model_class = self._get_model_class(entityType)
-        entity = database.session.query(model_class).get(entityID)
+        entity = dataBase.session.query(model_class).get(entityID)
         if entity:
-            database.session.delete(entity)
-            database.session.commit()
+            dataBase.session.delete(entity)
+            dataBase.session.commit()
         else:
             raise ValueError(f"{entityID} and {entityType} doesn't exist")
     

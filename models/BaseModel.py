@@ -4,6 +4,7 @@
 import uuid
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import String, Column, DateTime
 
 dataBase = SQLAlchemy()
 
@@ -11,9 +12,9 @@ class BaseModel:
     """BaseModel class"""
     #The __abstract__ property indicates that subclasses inheriting this class can be used as dataBase tables.
     __absrtact__ = True
-    id = dataBase.Column(dataBase.String(256), primary_key=True, unique=True, nullable=False)
-    created_at = dataBase.Column(dataBase.DateTime, nullable=False, default=datetime.now)
-    updated_at = dataBase.Column(dataBase.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+    id = Column("id", String, primary_key=True)
+    created_at = Column("created_at", DateTime)
+    updated_at = Column("updated_at", DateTime)
 
     def __init__(self):
         self.id = str(uuid.uuid4())

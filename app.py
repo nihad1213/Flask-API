@@ -5,10 +5,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from models.BaseModel import dataBase
+from models.CountryModel import Country
 from persistence.routes.country_routes import countryRoutes
 
 # Creating Flask App
 app = Flask(__name__)
+# Adding blueprints
 app.register_blueprint(countryRoutes)
 
 # Configuration for MySQL

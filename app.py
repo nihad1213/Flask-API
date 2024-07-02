@@ -24,7 +24,24 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Adding Models to Create Table
+from models.HostModel import Host
 from models.CityModel import City
+from models.AmenityModel import Amenity
+from models.CountryModel import Country
+from models.PlaceModel import Place
+from models.ReviewModel import Review
+from models.UserModel import User
+
+# Importing Routes
+from persistence.routes.user_route import userRoutes
+
+
+app.register_blueprint(userRoutes)
+
+
+@app.route('/')
+def index():
+    return 'Index'
 
 if __name__ == '__main__':
     # Creating Table

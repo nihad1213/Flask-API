@@ -5,15 +5,11 @@ from models.BaseModel import BaseModel, db
 
 """City class"""
 class City(BaseModel):
-    
-    # Create table cities
     __tablename__ = 'cities'
-    id = db.Column(db.String(60), primary_key=True, nullable=False) 
+    city_id = db.Column(db.String(60))
     name = db.Column(db.String(128), nullable=False)
     country = db.Column(db.String(128), nullable=False)
     country_code = db.Column(db.String(3), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, country, country_code):
         super().__init__()

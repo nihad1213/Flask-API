@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Importing File and Modules"""
 from db import db
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 class IPersistanceManager(ABC):
     @abstractmethod

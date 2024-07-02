@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
-"""CityModel class"""
-
+"""Importing Model and Files"""
 from models.BaseModel import BaseModel, db
 
+"""City class"""
 class City(BaseModel):
-    """City class"""
+    
+    # Create table cities
     __tablename__ = 'cities'
     id = db.Column(db.String(60), primary_key=True, nullable=False) 
     name = db.Column(db.String(128), nullable=False)

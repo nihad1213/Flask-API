@@ -6,9 +6,11 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from db import db
 
+
+"""BaseModel class"""
 class BaseModel(db.Model):
-    """BaseModel class"""
-    __abstract__ = True  # SQLAlchemy will not create a table for this model
+    # SQLAlchemy will not create a table for this model
+    __abstract__ = True  
     id = db.Column(db.String(60), primary_key=True, default=str(uuid.uuid4()))
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)

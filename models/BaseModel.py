@@ -1,25 +1,20 @@
 #!/usr/bin/python3
 
-"""Importing libs for configure datetime"""
+"""Importing libs for configuring datetime"""
 import uuid
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Column, DateTime
+from db import db
 
-dataBase = SQLAlchemy()
-
-class BaseModel:
+class BaseModel(db.Model):
     """BaseModel class"""
-    #The __abstract__ property indicates that subclasses inheriting this class can be used as dataBase tables.
-    __absrtact__ = True
-    id = Column("id", String, primary_key=True)
-    created_at = Column("created_at", DateTime)
-    updated_at = Column("updated_at", DateTime)
-
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    __abstract__ = True  # SQLAlchemy will not create a table for this model
+    id = db.Column(db.String(60), primary_key=True, default=str(uuid.uuid4()))
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     def save(self):
+        """Method to update updated_at timestamp and save the instance"""
         self.updated_at = datetime.now()
+        db.session.add(self)
+        db.session.commit()

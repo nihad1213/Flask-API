@@ -1,36 +1,26 @@
 #!/usr/bin/python3
 
-"""Importing Libraries and Modules"""
+"""Importing Modules and Models"""
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
-from models.BaseModel import dataBase
-from models.CountryModel import Country
-from persistence.routes.country_routes import countryRoutes
+from db import db
 
 # Creating Flask App
 app = Flask(__name__)
-# Adding blueprints
-app.register_blueprint(countryRoutes)
 
-# Configuration for MySQL
-DB_URI = "mysql://root:''@localhost/hbtn" # dbusername:'dbpassword'@servername/dbname
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI 
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Improve performace. Doesnt show warnings. Using: (Optinal)
+# app Config
+                                        #service_name://username:password@servername/Databasename
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/hbtn?unix_socket=/opt/lampp/var/mysql/mysql.sock'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Setting Up Database 
-dataBase = SQLAlchemy(app)
+db.init_app(app)
 
-# Basic Route send us to welcome page
-@app.route('/')
-def welcome():
-    return "Sagopa Kajmer"
+# Adding Models to Create Table
+from models.CityModel import City
 
-if __name__ == "__main__":
-    # Used to create an application context
+if __name__ == '__main__':
+    # Creating Table
     with app.app_context():
-        # Create all tables if they do not exist
-        dataBase.create_all()
-    
-    # Run the Flask application
+        db.create_all()
+
     app.run(debug=True)

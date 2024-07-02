@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
 from models.BaseModel import BaseModel, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -7,7 +6,7 @@ class User(BaseModel):
     __tablename__ = 'users'
 
     email = db.Column(db.String(255), unique=True, nullable=False)
-    password_hash = db.Column(db.String(256), nullable=False)  # Increase size to accommodate longer hash
+    password_hash = db.Column(db.String(256), nullable=False)  # Adjust size if needed
     is_admin = db.Column(db.Boolean, default=False)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)

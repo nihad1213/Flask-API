@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from models.UserModel import db, User
+from flask_bcrypt import check_password_hash
 from datetime import datetime
+from flask_jwt_extended import create_access_token
 
 userRoutes = Blueprint('user_routes', __name__)
 
@@ -19,6 +21,25 @@ def userToDict(user):
 def get_users():
     users = User.query.all()
     return jsonify([userToDict(user) for user in users]), 200
+
+@userRoutes.route('/login', methods=['POST'])
+def login():
+    data = request.json
+
+    email = data.get('email', None)
+    password = data.get('password', None)
+
+    if not email or not password:
+        return jsonify({'error': 'Missing email or password'}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not user.check_password(password):
+        return jsonify({'error': 'Invalid email or password'}), 401
+
+    # Identity can be any data that is json serializable
+    access_token = create_access_token(identity=user.id)
+    return jsonify(access_token=access_token), 200
 
 @userRoutes.route('/users', methods=['POST'])
 def add_user():

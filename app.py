@@ -5,11 +5,16 @@ from flask import Flask
 from db import db
 from dotenv import load_dotenv
 import os
+from flask_jwt_extended import JWTManager
 
 load_dotenv()
 
 # Creating Flask App
 app = Flask(__name__)
+
+# Configure JWT
+app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this to a secure secret key
+jwt = JWTManager(app)
 
 # Database Config
 DATABASE_TYPE = os.getenv('DATABASE_TYPE')

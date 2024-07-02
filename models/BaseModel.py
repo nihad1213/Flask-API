@@ -11,7 +11,7 @@ from db import db
 class BaseModel(db.Model):
     # SQLAlchemy will not create a table for this model
     __abstract__ = True  
-    id = db.Column(db.String(60), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column(db.String(60), primary_key=True, default=lambda: str(uuid.uuid4()))   
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 

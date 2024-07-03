@@ -6,7 +6,6 @@ from db import db
 from dotenv import load_dotenv
 import os
 from flask_jwt_extended import JWTManager
-import json
 
 load_dotenv()
 
@@ -32,20 +31,19 @@ db.init_app(app)
 # Adding Models to Create Table
 from models.UserModel import User
 from models.CountryModel import Country
+from models.AmenityModel import Amenity
 
 # Importing Routes
 from persistence.routes.user_route import userRoutes
 from persistence.routes.country_route import countryRoutes
 from persistence.routes.city_route import cityRoutes
+from persistence.routes.amenity_route import amenityRoutes
 
 # Registering blueprints
 app.register_blueprint(userRoutes)
 app.register_blueprint(countryRoutes)
 app.register_blueprint(cityRoutes)
-
-
-# Path to your JSON file containing country data
-json_file = 'data/country_codes.json'
+app.register_blueprint(amenityRoutes)
 
 
 # Route for index

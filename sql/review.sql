@@ -1,0 +1,11 @@
+CREATE TABLE reviews (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(60) NOT NULL,
+    place_id VARCHAR(60) NOT NULL,
+    rating INT NOT NULL,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (place_id) REFERENCES places(id)
+);

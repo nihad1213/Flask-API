@@ -1,19 +1,17 @@
 #!/usr/bin/python3
 
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
+from models.BaseModel import BaseModel
 from datetime import datetime
-from models.BaseModel import BaseModel, db
+from db import db
 
 class Review(BaseModel):
     __tablename__ = 'reviews'
 
-    review_id = db.Column(db.String(60))
-    user_id = db.Column(db.String(60))
-    place_id = db.Column(db.String(60))
-    rating = db.Column(db.Integer)
-    comment = db.Column(db.Text)
-
+    user_id = db.Column(db.String(60), db.ForeignKey('users.id'), nullable=False)
+    place_id = db.Column(db.String(60), db.ForeignKey('places.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.Text, nullable=True)
 
     def __init__(self, user_id, place_id, rating, comment):
         super().__init__()
@@ -24,8 +22,3 @@ class Review(BaseModel):
 
     def __str__(self):
         return f"Review(id={self.id}, user_id={self.user_id}, place_id={self.place_id}, rating={self.rating})"
-
-    def validate_rating(self):
-        if not (1 <= self.rating <= 5):
-            raise ValueError("Rating must be between 1 and 5")
-

@@ -1,0 +1,14 @@
+{
+    "name": "Cozy Apartment near Downtown",
+    "description": "A comfortable apartment close to city center",
+    "address": "123 Main Street",
+    "city_id": "1",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "host_id": "12345",
+    "number_of_rooms": 2,
+    "number_of_bathrooms": 1,
+    "price_per_night": 100.0,
+    "max_guests": 4,
+    "amenity_ids": ["68d99b40-41b4-4f32-946a-a1c214fc93fe", "b422aeb7-c31f-48dd-bbe8-7ee9fe2c81a9"]
+}

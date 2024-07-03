@@ -32,18 +32,24 @@ db.init_app(app)
 from models.UserModel import User
 from models.CountryModel import Country
 from models.AmenityModel import Amenity
+from models.PlaceModel import Place
+from models.ReviewModel import Review
 
 # Importing Routes
 from persistence.routes.user_route import userRoutes
 from persistence.routes.country_route import countryRoutes
 from persistence.routes.city_route import cityRoutes
 from persistence.routes.amenity_route import amenityRoutes
+from persistence.routes.place_route import placeRoutes
+from persistence.routes.review_route import reviewRoutes 
 
 # Registering blueprints
 app.register_blueprint(userRoutes)
 app.register_blueprint(countryRoutes)
 app.register_blueprint(cityRoutes)
 app.register_blueprint(amenityRoutes)
+app.register_blueprint(placeRoutes)
+app.register_blueprint(reviewRoutes)
 
 
 # Route for index

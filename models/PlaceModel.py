@@ -1,23 +1,33 @@
-#!/usr/bin/python3
+from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, Table
+from sqlalchemy.orm import relationship
+from models.BaseModel import BaseModel
+from db import db
 
-from models.BaseModel import BaseModel, db
+# Association table definition for many-to-many relationship
+place_amenities = Table('place_amenities', db.Model.metadata,
+    Column('place_id', String(256), ForeignKey('places.id')),
+    Column('amenity_id', String(256), ForeignKey('amenities.id'))
+)
 
-class Place(BaseModel):
+class Place(BaseModel, db.Model):
     __tablename__ = 'places'
     
-    place_id = db.Column(db.String(60))
-    name = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    address = db.Column(db.String(255), nullable=False)
-    city_id = db.Column(db.String(60))
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    host_id = db.Column(db.String(60))
-    number_of_rooms = db.Column(db.Integer, nullable=False)
-    number_of_bathrooms = db.Column(db.Integer, nullable=False)
-    price_per_night = db.Column(db.Float, nullable=False)
-    max_guests = db.Column(db.Integer, nullable=False)
-    amenity_ids = db.Column(db.String(255), nullable=True)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
+    address = Column(String(255), nullable=False)
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    host_id = Column(String(60), nullable=False)
+    number_of_rooms = Column(Integer, nullable=False)
+    number_of_bathrooms = Column(Integer, nullable=False)
+    price_per_night = Column(Float, nullable=False)
+    max_guests = Column(Integer, nullable=False)
+    amenity_ids = Column(String(255), nullable=True)
+
+    # Relationship to amenities via the association table
+    amenities = relationship("Amenity", secondary=place_amenities, backref="places")
 
     def __init__(self, name, description, address, city_id, latitude, longitude, host_id,
                  number_of_rooms, number_of_bathrooms, price_per_night, max_guests, amenity_ids):

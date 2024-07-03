@@ -1,0 +1,5 @@
+Flask==2.0.2
+SQLAlchemy==1.4.30
+Flask-SQLAlchemy==2.5.2
+psycopg2-binary==2.9.3   # Only if you use PostgreSQL
+gunicorn==20.1.0         # For production deployment

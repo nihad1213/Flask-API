@@ -68,14 +68,14 @@ def add_user():
 
     return jsonify(userToDict(new_user)), 201
 
-@userRoutes.route('/users/<int:user_id>', methods=['GET'])
+@userRoutes.route('/users/<string:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)
     if not user:
         return jsonify({'message': 'User not found'}), 404
     return jsonify(userToDict(user)), 200
 
-@userRoutes.route('/users/<int:user_id>', methods=['DELETE'])
+@userRoutes.route('/users/<string:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -85,7 +85,7 @@ def delete_user(user_id):
     db.session.commit()
     return '', 204
 
-@userRoutes.route('/users/<int:user_id>', methods=['PUT'])
+@userRoutes.route('/users/<string:user_id>', methods=['PUT'])
 def update_user(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -102,9 +102,12 @@ def update_user(user_id):
     user.email = data['email']
     user.first_name = data['first_name']
     user.last_name = data['last_name']
-    user.password = data.get('password', user.password)
-    if 'is_admin' in data:
-        user.is_admin = data['is_admin']
+    user.is_admin = data.get('is_admin', user.is_admin)  # Update isAdmin if provided
+
+    # Update password if provided
+    if 'password' in data:
+        user.set_password(data['password'])
+
     user.updated_at = datetime.utcnow()
 
     db.session.commit()

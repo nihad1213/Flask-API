@@ -12,7 +12,6 @@ place_amenities = Table('place_amenities', db.Model.metadata,
 class Place(BaseModel, db.Model):
     __tablename__ = 'places'
     
-    id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     address = Column(String(255), nullable=False)

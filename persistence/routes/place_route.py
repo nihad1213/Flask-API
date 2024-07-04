@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.PlaceModel import Place
 from db import db
+from models.AmenityModel import Amenity  # Adjust import as per your Amenity model
 
 placeRoutes = Blueprint('place_routes', __name__)
 
@@ -21,6 +22,10 @@ def place_to_dict(place):
         'max_guests': place.max_guests,
         'amenity_ids': place.amenity_ids.split(',') if place.amenity_ids else []
     }
+
+def validate_uuids_exist(model, uuids):
+    existing_uuids = model.query.filter(model.id.in_(uuids)).all()
+    return len(existing_uuids) == len(uuids)
 
 # Create a new place
 @placeRoutes.route('/places', methods=['POST'])
